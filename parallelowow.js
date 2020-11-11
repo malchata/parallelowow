@@ -1,33 +1,31 @@
 if (typeof registerPaint !== "undefined") {
-  const paintName = "parallelowow";
-
-  class Parallelowow {
+  registerPaint("parallelowow", class {
     static get inputProperties () {
       return [
-        `--${paintName}-tile-width`,
-        `--${paintName}-base-color`,
-        `--${paintName}-color-step`,
-        `--${paintName}-probability`,
-        `--${paintName}-stroke-weight`,
+        "--parallelowow-tile-width",
+        "--parallelowow-base-color",
+        "--parallelowow-color-step",
+        "--parallelowow-probability",
+        "--parallelowow-stroke-weight",
       ];
     }
 
     paint (ctx, geom, properties) {
       const radians = (Math.PI / 180) * 39.375;
-      const tileWidth = parseInt(properties.get(`--${paintName}-tile-width`));
+      const tileWidth = parseInt(properties.get("--parallelowow-tile-width"));
       const tileHeight = tileWidth * (1 / 4);
       const yTiles = geom.height / tileHeight;
       const xTiles = geom.width / tileWidth;
 
       let colors = [
-        properties.get(`--${paintName}-base-color`).toString(),
-        this.adjustBrightness(properties.get(`--${paintName}-base-color`).toString(), -10),
-        this.adjustBrightness(properties.get(`--${paintName}-base-color`).toString(), -30)
+        properties.get("--parallelowow-base-color").toString(),
+        this.adjustBrightness(properties.get("--parallelowow-base-color").toString(), -10),
+        this.adjustBrightness(properties.get("--parallelowow-base-color").toString(), -30)
       ];
 
-      const colorStep = parseInt(properties.get(`--${paintName}-color-step`));
-      const probability = parseFloat(properties.get(`--${paintName}-probability`));
-      const strokeWeight = parseFloat(properties.get(`--${paintName}-stroke-weight`));
+      const colorStep = parseInt(properties.get("--parallelowow-color-step"));
+      const probability = parseFloat(properties.get("--parallelowow-probability"));
+      const strokeWeight = parseFloat(properties.get("--parallelowow-stroke-weight"));
       const outerRadius = geom.width > geom.height ? geom.width * 2 : geom.height * 2;
 
       if (strokeWeight > 0) {
@@ -121,7 +119,5 @@ if (typeof registerPaint !== "undefined") {
 
       return rgbString.indexOf("rgba") !== -1 ? `rgba(${rgbParts.join(",")})` : `rgb(${rgbParts.join(",")})`;
     }
-  }
-
-  registerPaint(paintName, Parallelowow);
+  });
 }
