@@ -1,10 +1,10 @@
 {
   "name": "parallelowow",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A parallelogram-ish paint worklet that'll make you go \"woooow\".",
   "main": "parallelowow.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cp -fv ./parallelowow.js ./test/ && node ./http.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/malchata/parallelowow/issues"
   },
-  "homepage": "https://github.com/malchata/parallelowow#readme"
+  "homepage": "https://github.com/malchata/parallelowow#readme",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "express": "^4.17.1"
+  }
 }

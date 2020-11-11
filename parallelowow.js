@@ -1,32 +1,45 @@
 if (typeof registerPaint !== "undefined") {
   registerPaint("parallelowow", class {
-    static get inputProperties () {
+    static get inputProperties() {
       return [
-        "--parallelowow-tile-width",
-        "--parallelowow-base-color",
-        "--parallelowow-color-step",
-        "--parallelowow-probability",
-        "--parallelowow-stroke-weight",
+        `--parallelowow-tile-width`,
+        `--parallelowow-base-color`,
+        `--parallelowow-color-step`,
+        `--parallelowow-probability`,
+        `--parallelowow-stroke-weight`,
       ];
     }
 
-    paint (ctx, geom, properties) {
+    parseProps(props) {
+      return [
+        `--parallelowow-tile-width`,
+        `--parallelowow-base-color`,
+        `--parallelowow-color-step`,
+        `--parallelowow-probability`,
+        `--parallelowow-stroke-weight`,
+      ].map(param => props.get(param).toString().trim() || undefined);
+    }
+
+    paint(ctx, geom, properties) {
+      let [
+        tileWidth = 56,
+        baseColor = "#c9f",
+        colorStep = -3,
+        probability = 0.33,
+        strokeWeight = 0.5
+      ] = this.parseProps(properties);
+
       const radians = (Math.PI / 180) * 39.375;
-      const tileWidth = parseInt(properties.get("--parallelowow-tile-width"));
       const tileHeight = tileWidth * (1 / 4);
       const yTiles = geom.height / tileHeight;
       const xTiles = geom.width / tileWidth;
+      const outerRadius = geom.width > geom.height ? geom.width * 2 : geom.height * 2;
 
       let colors = [
-        properties.get("--parallelowow-base-color").toString(),
-        this.adjustBrightness(properties.get("--parallelowow-base-color").toString(), -10),
-        this.adjustBrightness(properties.get("--parallelowow-base-color").toString(), -30)
+        baseColor,
+        this.adjustBrightness(baseColor, -10),
+        this.adjustBrightness(baseColor, -30)
       ];
-
-      const colorStep = parseInt(properties.get("--parallelowow-color-step"));
-      const probability = parseFloat(properties.get("--parallelowow-probability"));
-      const strokeWeight = parseFloat(properties.get("--parallelowow-stroke-weight"));
-      const outerRadius = geom.width > geom.height ? geom.width * 2 : geom.height * 2;
 
       if (strokeWeight > 0) {
         ctx.lineWidth = strokeWeight;
@@ -98,7 +111,36 @@ if (typeof registerPaint !== "undefined") {
       }
     }
 
-    adjustBrightness (rgbString, amt) {
+    isValidHexColor(hex) {
+      return /^#?(?:[0-9a-f]{3}){1,2}$/i.test(hex);
+    }
+
+    hexToRgb(hex) {
+      if (/^#/i.test(hex)) {
+        hex = hex.replace("#", "");
+      }
+
+      const step = hex.length / 2 === 3 ? 2 : 1;
+
+      if (hex.length === 3) {
+        const r = hex.substring(0, 1);
+        const g = hex.substring(1, 2);
+        const b = hex.substring(2, 3);
+
+        hex = `${r}${r}${g}${g}${b}${b}`;
+      }
+
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+
+      console.log(r, g, b);
+
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    adjustBrightness(colorString, amt) {
+      let rgbString = this.isValidHexColor(colorString) ? this.hexToRgb(colorString) : colorString;
       rgbString = rgbString.replace(/rgba?\(/g, "").replace(/\)/g, "").replace(/\s/g, "");
 
       const rgbParts = rgbString.split(",").map((rgbPart, index) => {
