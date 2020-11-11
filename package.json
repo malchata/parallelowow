@@ -1,0 +1,25 @@
+{
+  "name": "parallelowow",
+  "version": "0.1.0",
+  "description": "",
+  "main": "parallelowow.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malchata/parallelowow.git"
+  },
+  "keywords": [
+    "paint",
+    "worklet",
+    "css",
+    "houdini"
+  ],
+  "author": "Jeremy L. Wagner <jeremy.l.wagner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/malchata/parallelowow/issues"
+  },
+  "homepage": "https://github.com/malchata/parallelowow#readme"
+}
