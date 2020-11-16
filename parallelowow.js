@@ -1,7 +1,7 @@
 /* global registerPaint */
 
 if (typeof registerPaint !== "undefined") {
-  class Parallelowow {
+  registerPaint("parallelowow", class {
     static get inputProperties() {
       return [
         "--parallelowow-tile-width",
@@ -13,11 +13,11 @@ if (typeof registerPaint !== "undefined") {
     }
 
     paint(ctx, geom, properties) {
-      let tileWidth = parseInt(properties.get("--parallelowow-tile-width")) || 56;
-      let baseColor = properties.get("--parallelowow-base-color").toString() || "#cc99ff";
-      let colorStep = parseInt(properties.get("--parallelowow-color-step")) || -3;
-      let probability = parseFloat(properties.get("--parallelowow-probability")) || 0.33;
-      let strokeWeight = parseFloat(properties.get("--parallelowow-stroke-weight")) || -0.5;
+      let tileWidth = Number(properties.get("--parallelowow-tile-width")) || 56;
+      let baseColor = properties.get("--parallelowow-base-color").toString().trim() || "#c9f";
+      let colorStep = Number(properties.get("--parallelowow-color-step")) || -3;
+      let probability = Number(properties.get("--parallelowow-probability")) || 0.33;
+      let strokeWeight = Number(properties.get("--parallelowow-stroke-weight")) || 0.5;
 
       const radians = (Math.PI / 180) * 39.375;
       const tileHeight = tileWidth * 0.25;
@@ -30,6 +30,8 @@ if (typeof registerPaint !== "undefined") {
         this.adjustBrightness(baseColor, -10),
         this.adjustBrightness(baseColor, -30)
       ];
+
+      console.dir(colors);
 
       if (strokeWeight > 0) {
         ctx.lineWidth = strokeWeight;
@@ -147,7 +149,5 @@ if (typeof registerPaint !== "undefined") {
 
       return rgbString.indexOf("rgba") !== -1 ? `rgba(${rgbParts.join(",")})` : `rgb(${rgbParts.join(",")})`;
     }
-  }
-
-  registerPaint("parallelowow", Parallelowow);
+  });
 }

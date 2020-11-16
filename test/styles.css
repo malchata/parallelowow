@@ -4,17 +4,15 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: #08a;
-  --parallelowow-tile-width: 64;
-  --parallelowow-base-color: #08a;
-  --parallelowow-color-step: 1;
-  --parallelowow-probability: 0.426;
+#paint {
+  background-color: #0088aa;
+  --parallelowow-tile-width: 96;
+  --parallelowow-base-color: #0088aa;
+  --parallelowow-color-step: -1;
+  --parallelowow-probability: 0.1666666667;
   --parallelowow-stroke-weight: 2;
   background-image: paint(parallelowow);
-  min-height: 100vh;
-}
-
-html {
-  min-height: 100vh;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
