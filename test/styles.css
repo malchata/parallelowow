@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #08a;
+  --parallelowow-tile-width: 64;
+  --parallelowow-base-color: #08a;
+  --parallelowow-color-step: 1;
+  --parallelowow-probability: 0.426;
+  --parallelowow-stroke-weight: 2;
+  background-image: paint(parallelowow);
+  min-height: 100vh;
+}
+
+html {
+  min-height: 100vh;
+}

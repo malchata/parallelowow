@@ -1,36 +1,26 @@
+/* global registerPaint */
+
 if (typeof registerPaint !== "undefined") {
-  registerPaint("parallelowow", class {
+  class Parallelowow {
     static get inputProperties() {
       return [
-        `--parallelowow-tile-width`,
-        `--parallelowow-base-color`,
-        `--parallelowow-color-step`,
-        `--parallelowow-probability`,
-        `--parallelowow-stroke-weight`,
+        "--parallelowow-tile-width",
+        "--parallelowow-base-color",
+        "--parallelowow-color-step",
+        "--parallelowow-probability",
+        "--parallelowow-stroke-weight",
       ];
     }
 
-    parseProps(props) {
-      return [
-        `--parallelowow-tile-width`,
-        `--parallelowow-base-color`,
-        `--parallelowow-color-step`,
-        `--parallelowow-probability`,
-        `--parallelowow-stroke-weight`,
-      ].map(param => props.get(param).toString().trim() || undefined);
-    }
-
     paint(ctx, geom, properties) {
-      let [
-        tileWidth = 56,
-        baseColor = "#c9f",
-        colorStep = -3,
-        probability = 0.33,
-        strokeWeight = 0.5
-      ] = this.parseProps(properties);
+      let tileWidth = parseInt(properties.get("--parallelowow-tile-width")) || 56;
+      let baseColor = properties.get("--parallelowow-base-color").toString() || "#cc99ff";
+      let colorStep = parseInt(properties.get("--parallelowow-color-step")) || -3;
+      let probability = parseFloat(properties.get("--parallelowow-probability")) || 0.33;
+      let strokeWeight = parseFloat(properties.get("--parallelowow-stroke-weight")) || -0.5;
 
       const radians = (Math.PI / 180) * 39.375;
-      const tileHeight = tileWidth * (1 / 4);
+      const tileHeight = tileWidth * 0.25;
       const yTiles = geom.height / tileHeight;
       const xTiles = geom.width / tileWidth;
       const outerRadius = geom.width > geom.height ? geom.width * 2 : geom.height * 2;
@@ -120,21 +110,19 @@ if (typeof registerPaint !== "undefined") {
         hex = hex.replace("#", "");
       }
 
-      const step = hex.length / 2 === 3 ? 2 : 1;
-
       if (hex.length === 3) {
-        const r = hex.substring(0, 1);
-        const g = hex.substring(1, 2);
-        const b = hex.substring(2, 3);
+        const rHex = hex.substring(0, 1);
+        const gHex = hex.substring(1, 2);
+        const bHex = hex.substring(2, 3);
 
-        hex = `${r}${r}${g}${g}${b}${b}`;
+        hex = `${rHex}${rHex}${gHex}${gHex}${bHex}${bHex}`;
       }
 
-      const r = parseInt(hex.substring(0, 2), 16);
-      const g = parseInt(hex.substring(2, 4), 16);
-      const b = parseInt(hex.substring(4, 6), 16);
+      const rDec = parseInt(hex.substring(0, 2), 16);
+      const gDec = parseInt(hex.substring(2, 4), 16);
+      const bDec = parseInt(hex.substring(4, 6), 16);
 
-      return `rgb(${r}, ${g}, ${b})`;
+      return `rgb(${rDec},${gDec},${bDec})`;
     }
 
     adjustBrightness(colorString, amt) {
@@ -159,5 +147,7 @@ if (typeof registerPaint !== "undefined") {
 
       return rgbString.indexOf("rgba") !== -1 ? `rgba(${rgbParts.join(",")})` : `rgb(${rgbParts.join(",")})`;
     }
-  });
+  }
+
+  registerPaint("parallelowow", Parallelowow);
 }

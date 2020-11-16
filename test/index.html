@@ -4,32 +4,12 @@
     <title>
       Paint Worklet Test
     </title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: #c9f;
-        background-image: paint(parallelowow);
-        min-height: 100vh;
-        --parallelowow-base-color: #00aacc;
-        --parallelowow-color-step: 0;
-        --parallelowow-stroke-weight: 10;
-        --parallelowow-tile-width: 32;
-      }
-
-      html {
-        min-height: 100vh;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <script>
       if (window.CSS.paintWorklet) {
-        CSS.paintWorklet.addModule("/parallelowow.js");
+        CSS.paintWorklet.addModule("parallelowow.js");
       }
     </script>
   </body>

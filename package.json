@@ -1,15 +1,21 @@
 {
   "name": "parallelowow",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A parallelogram-ish paint worklet that'll make you go \"woooow\".",
   "main": "parallelowow.js",
   "scripts": {
-    "test": "cp -fv ./parallelowow.js ./test/ && node ./http.js"
+    "copy": "cp -fv ./parallelowow.js ./test/",
+    "server": "node ./http.js",
+    "test": "npm run copy && npm run server",
+    "lint": "npx eslint ./parallelowow.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/malchata/parallelowow.git"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "keywords": [
     "paint",
     "worklet",
