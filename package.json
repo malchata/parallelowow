@@ -1,6 +1,6 @@
 {
   "name": "parallelowow",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A parallelogram-ish paint worklet that'll make you go \"woooow\".",
   "main": "parallelowow.js",
   "scripts": {

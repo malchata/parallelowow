@@ -31,8 +31,6 @@ if (typeof registerPaint !== "undefined") {
         this.adjustBrightness(baseColor, -30)
       ];
 
-      console.dir(colors);
-
       if (strokeWeight > 0) {
         ctx.lineWidth = strokeWeight;
         ctx.strokeStyle = this.adjustBrightness(colors[0], 25);
